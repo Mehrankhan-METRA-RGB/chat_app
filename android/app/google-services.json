@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "733897650375",
+    "project_id": "chat-apps-361cd",
+    "storage_bucket": "chat-apps-361cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733897650375:android:c1db961f02435d3f5c0ee2",
+        "android_client_info": {
+          "package_name": "com.mehran.chat.app.chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "733897650375-naq7v80i85jbcvb42j3nkd8c6jnp261c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClnCNl2TMZsLYXOsj7IHDdRwkH_rToh_8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "733897650375-naq7v80i85jbcvb42j3nkd8c6jnp261c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
