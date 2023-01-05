@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:chat_app/Application/Registration/registration_cubit.dart';
+import 'package:chat_app/Presentation/common/ContextWidgets/app_dialog.dart';
 import 'package:chat_app/Presentation/common/app_bar.dart';
 import 'package:chat_app/Presentation/common/app_button.dart';
 import 'package:chat_app/Presentation/common/app_error.dart';
@@ -32,7 +33,7 @@ class _RegistrationState extends State<Registration> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: 'Registration',
         isLeading: false,
       ),
@@ -48,15 +49,16 @@ class _RegistrationState extends State<Registration> {
                     MaterialPageRoute(
                         builder: (context) =>
                             const Dashboard(title: 'Chat App')));
+              } else if (state is RegistrationError) {
+                AppDialog.show(context,
+                    child: ErrorScreen(error: state.error!));
               }
             },
             builder: (context, state) {
               if (state is RegistrationLoading) {
                 return const LoadingScreen();
               }
-              if (state is RegistrationError) {
-                return ErrorScreen(error: state.error!);
-              }
+
               return Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Form(

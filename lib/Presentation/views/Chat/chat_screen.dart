@@ -65,12 +65,14 @@ class _ChatScreenState extends State<ChatScreen> {
                                   ? SizedBox(
                                       width: MediaQuery.of(context).size.width *
                                           0.7,
-                                      child: AppAudioPlayer(
+                                      child:
+                                      // Container()
+                                      AppAudioPlayer(
                                         path: state.messages![index].url![0],
                                         messageId: state.messages![index].id!,
                                         myId: widget.myId,
                                       ),
-                                    )
+                                      )
                                   : ChatTile(
                                       data: state.messages![index],
                                       id: widget.myId,

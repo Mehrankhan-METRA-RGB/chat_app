@@ -1,4 +1,5 @@
 import 'package:chat_app/Application/Login/login_cubit.dart';
+import 'package:chat_app/Presentation/common/ContextWidgets/app_dialog.dart';
 import 'package:chat_app/Presentation/common/app_bar.dart';
 import 'package:chat_app/Presentation/common/app_button.dart';
 import 'package:chat_app/Presentation/common/app_error.dart';
@@ -24,7 +25,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(
+        appBar: const CustomAppBar(
           title: 'Login',
           isLeading: false,
         ),
@@ -36,15 +37,15 @@ class _LoginState extends State<Login> {
                   MaterialPageRoute(
                       builder: (context) =>
                           const Dashboard(title: 'Chat App')));
+            } else if (state is LoginError) {
+              AppDialog.show(context, child: ErrorScreen(error: state.error!));
             }
           },
           builder: (context, state) {
             if (state is LoginLoading) {
               return const LoadingScreen();
             }
-            if (state is LoginError) {
-              return ErrorScreen(error: state.error!);
-            }
+
             return Padding(
               padding: const EdgeInsets.all(15.0),
               child: Form(

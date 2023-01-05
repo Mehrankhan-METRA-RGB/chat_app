@@ -22,6 +22,18 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>we need to access your photos</string>
+	<key>NSAllowsArbitraryLoadsForMedia</key>
+	<string>We need Load files from your storage</string>
+	<key>NSAllowsArbitraryLoads</key>
+	<string>Want to Access ArbitrarLoads</string>
+	<key>NSURLConnection</key>
+	<string>We want to allow connections</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need to access to the microphone to record audio file</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

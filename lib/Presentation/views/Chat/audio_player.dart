@@ -1,7 +1,7 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:chat_app/Presentation/common/app_shadow.dart';
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 
 class AppAudioPlayer extends StatefulWidget {
   const AppAudioPlayer(
@@ -28,19 +28,21 @@ class _AppAudioPlayerState extends State<AppAudioPlayer> {
   void initState() {
     super.initState();
     audioPlayer = AudioPlayer();
-
-    getDuration();
-    audioPlayer!.getCurrentPosition();
-    playAudioFromLocalStorage(DeviceFileSource(widget.path));
+    audioPlayer?.createPositionStream();
+    // getDuration();
+    // audioPlayer!.getCurrentPosition();
+    playAudioFromLocalStorage(widget.path);
     pauseAudio();
   }
 
-  getDuration() async {
-    total = await audioPlayer!.getDuration();
-  }
+  // getDuratio0n() async {
+  //   // total = await audioPlayer!.();
+  // }
 
-  playAudioFromLocalStorage(Source path) async {
-    await audioPlayer!.setSource(path);
+  playAudioFromLocalStorage(String path) async {
+    await audioPlayer!.setFilePath(path);
+    // await audioPlayer!.setAudioSource(AudioSource.uri(Uri.file(path)));
+
     // await audioPlayer!.play(
     //   path,
     // );
@@ -50,13 +52,17 @@ class _AppAudioPlayerState extends State<AppAudioPlayer> {
     await audioPlayer!.pause();
   }
 
+  playAudio() async {
+    await audioPlayer!.play();
+  }
+
   stopAudio() async {
     await audioPlayer!.stop();
   }
-
-  resumeAudio() async {
-    await audioPlayer!.resume();
-  }
+  //
+  // resumeAudio() async {
+  //   await audioPlayer!.resume();
+  // }
 
   double? width;
   @override
@@ -80,13 +86,12 @@ class _AppAudioPlayerState extends State<AppAudioPlayer> {
         children: [
           Expanded(
             child: StreamBuilder(
-              stream: audioPlayer?.onPositionChanged,
+              stream: audioPlayer?.positionStream,
               builder: (context, snapshot) {
                 final progress = snapshot.data ?? Duration.zero;
                 if (snapshot.hasData) {
-                  print(snapshot.data!.inSeconds);
                   return StreamBuilder(
-                      stream: audioPlayer!.onDurationChanged,
+                      stream: audioPlayer!.durationStream,
                       builder: (context, snap) {
                         if (snap.hasData) {
                           return ProgressBar(
@@ -168,7 +173,7 @@ class _AppAudioPlayerState extends State<AppAudioPlayer> {
                   _isPlaying = false;
                 });
               } else {
-                resumeAudio();
+                playAudio();
                 setState(() {
                   _isPlaying = true;
                 });
