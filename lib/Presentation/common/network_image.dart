@@ -47,7 +47,7 @@ class CacheImage extends StatelessWidget {
           height: height,
           child: Center(
             child: CircularProgressIndicator(
-              strokeWidth: 10,
+              strokeWidth: 5,
               backgroundColor: Colors.blueAccent.withOpacity(0.4),
               color: Colors.blueAccent,
             ),

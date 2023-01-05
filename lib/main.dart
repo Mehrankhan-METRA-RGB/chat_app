@@ -1,17 +1,24 @@
 import 'package:chat_app/Application/Chat/chat_cubit.dart';
+import 'package:chat_app/Application/Login/login_cubit.dart';
 import 'package:chat_app/Application/Recording/recording_cubit.dart';
-import 'package:chat_app/Presentation/views/Chat/chat_screen.dart';
+import 'package:chat_app/Application/Registration/registration_cubit.dart';
+import 'package:chat_app/Data/Repositories/Notification/notification_repository.dart';
+import 'package:chat_app/Presentation/views/Splash/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await NotificationRepository().initNotification();
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -19,99 +26,21 @@ class MyApp extends StatelessWidget {
         BlocProvider<RecordingCubit>(
             create: (BuildContext context) => RecordingCubit()),
         BlocProvider<ChatCubit>(create: (BuildContext context) => ChatCubit()),
+        BlocProvider<LoginCubit>(
+            create: (BuildContext context) => LoginCubit()),
+        BlocProvider<RegistrationCubit>(
+            create: (BuildContext context) => RegistrationCubit()),
       ],
       child: MaterialApp(
           title: 'Chat App',
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: const InitialScreen(title: 'Chat App')
-          // AudioRecorder(
-          //   onStop: (String path) {
-          //     print(path);
-          //   },ChatScreen
-          // ),
+          home: const SplashScreen()
+
+          // const Dashboard(title: 'Chat App')
+
           ),
-    );
-  }
-}
-
-class InitialScreen extends StatefulWidget {
-  const InitialScreen({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<InitialScreen> createState() => _InitialScreenState();
-}
-
-class _InitialScreenState extends State<InitialScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 40),
-              child: MaterialButton(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ChatScreen(myId: '1')));
-                },
-                color: Colors.blueAccent,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  mainAxisSize: MainAxisSize.max,
-                  children: const [
-                    Text(
-                      'USER 1 Chat Screen',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 40),
-              child: MaterialButton(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ChatScreen(myId: '2')));
-                },
-                color: Colors.blueAccent,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  mainAxisSize: MainAxisSize.max,
-                  children: const [
-                    Text(
-                      'USER 2 Chat Screen',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

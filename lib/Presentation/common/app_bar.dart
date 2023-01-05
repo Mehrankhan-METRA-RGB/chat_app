@@ -3,9 +3,16 @@ import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
-  bool isLeading;
+  final bool isLeading;
+  final Widget? button;
+  final Widget? leadingButton;
 
-  CustomAppBar({key, required this.title, this.isLeading = true})
+  const CustomAppBar(
+      {key,
+      this.button,
+      this.leadingButton,
+      required this.title,
+      this.isLeading = true})
       : preferredSize = const Size.fromHeight(65),
         super(key: key);
   @override
@@ -24,17 +31,18 @@ class CustomAppBarState extends State<CustomAppBar> {
       backgroundColor: Colors.white,
       automaticallyImplyLeading: false,
       centerTitle: true,
-      leading: widget.isLeading
-          ? GestureDetector(
-              onTap: () => Navigator.pop(context),
-              behavior: HitTestBehavior.opaque,
-              child: const Icon(
-                Icons.arrow_back_ios_new_rounded,
-                color: Colors.blueAccent,
-                size: 25,
-              ),
-            )
-          : null,
+      leading: widget.leadingButton ??
+          (widget.isLeading
+              ? GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  behavior: HitTestBehavior.opaque,
+                  child: const Icon(
+                    Icons.arrow_back_ios_new_rounded,
+                    color: Colors.blueAccent,
+                    size: 25,
+                  ),
+                )
+              : null),
       title: Padding(
         padding: const EdgeInsets.only(top: 5),
         child: Text(
@@ -42,7 +50,7 @@ class CustomAppBarState extends State<CustomAppBar> {
           style: const TextStyle(fontSize: 19, color: Colors.black),
         ),
       ),
-      actions: const [],
+      actions: [widget.button ?? Container()],
     );
   }
 }
