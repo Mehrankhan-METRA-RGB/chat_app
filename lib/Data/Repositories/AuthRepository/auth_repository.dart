@@ -9,6 +9,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 class AuthRepository {
   static CollectionReference collections =
       FirebaseFirestore.instance.collection(AppCollections.users.name);
+
   static Future<Map<String, dynamic>> signIn(String email, String pass) async {
     try {
       UserCredential user = await FirebaseAuth.instance
@@ -37,9 +38,6 @@ class AuthRepository {
 
         addUser(uid, user);
       }
-
-      // SharedPre.setStringValue(SharedPre.ID, uid);
-
       return {'success': true, 'error': null};
     } catch (e) {
       return {'success': false, 'error': e.toString()};
